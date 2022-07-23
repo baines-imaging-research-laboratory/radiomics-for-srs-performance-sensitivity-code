@@ -1,0 +1,12 @@
+# ninja log v5
+1	126	5964971312501130	build/win64/rt_nonfinite.o	2fa93bce32b0e610
+4	174	5964971312971157	build/win64/MatrixSubselection_logical_initialize.o	9b783d7a79ca3212
+5	176	5964971312981157	build/win64/MatrixSubselection_logical_terminate.o	fbb50ee2e02cbab6
+3	182	5964971313071163	build/win64/MatrixSubselection_logical_data.o	d54364bb6f670cd4
+7	286	5964971314101221	build/win64/_coder_MatrixSubselection_logical_api.o	6719ac5b4da9e248
+6	978	5964971314151224	build/win64/MatrixSubselection_logical.o	672aaffa3aade9f9
+184	980	5964971314101221	build/win64/cpp_mexapi_version.o	1a07c4b5343d7bec
+178	981	5964971314391238	build/win64/_coder_MatrixSubselection_logical_info.o	bdd64383eababa5a
+127	982	5964971314411239	build/win64/_coder_MatrixSubselection_logical_mex.o	33522419f1d7c769
+175	1079	5964971315261288	build/win64/MatrixSubselection_logical_emxutil.o	65b901ab5e2c9747
+1080	1162	5964971322851722	MatrixSubselection_logical_mex.mexw64	c52e3c5516503c5d

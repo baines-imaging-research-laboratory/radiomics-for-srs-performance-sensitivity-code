@@ -1,0 +1,51 @@
+# CompilerName=mingw64
+# Mode=optim
+ninja_required_version = 1.3
+
+# Basic folders
+root = .
+builddir = $root/build/win64
+matlabdir = C:/Program Files/MATLAB/R2019b
+startdir = D:/Users/ddevries/Code Repos/CentralLibrary [Dev]/FeatureExtraction/Mex/MatrixSubselection
+
+# Toolchain information
+cc = C:\ProgramData\MATLAB\SupportPackages\R2019b\3P.instrset\mingw_w64.instrset\bin\gcc
+cxx = C:\ProgramData\MATLAB\SupportPackages\R2019b\3P.instrset\mingw_w64.instrset\bin\g++
+linker = C:\ProgramData\MATLAB\SupportPackages\R2019b\3P.instrset\mingw_w64.instrset\bin\gcc
+linkerxx = C:\ProgramData\MATLAB\SupportPackages\R2019b\3P.instrset\mingw_w64.instrset\bin\g++
+
+cflags =  -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I "D:\Users\ddevries\Code Repos\CentralLibrary [Dev]\CompiledMex" -I "D:\Users\ddevries\Code Repos\CentralLibrary [Dev]\FeatureExtraction\Mex\MatrixSubselection" -I "D:\Users\ddevries\Code Repos\CentralLibrary [Dev]\CompiledMex\interface" -I "C:\Program Files\MATLAB\R2019b\extern\include" -I "C:\Program Files\MATLAB\R2019b\simulink\include" -I "C:\Program Files\MATLAB\R2019b\rtw\c\src" -I "C:\Program Files\MATLAB\R2019b\rtw\c\src\ext_mode\common" -I "C:\Program Files\MATLAB\R2019b\rtw\c\ert" -I "." -DMODEL=MatrixSubselection_logical_mex -DHAVESTDIO -DUSE_RTMODEL -D__USE_MINGW_ANSI_STDIO=1 -DMW_NEEDS_VERSION_H  
+
+cxxflags =  -c -fexceptions -fno-omit-frame-pointer -std=c++11 -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c++11 -I "D:\Users\ddevries\Code Repos\CentralLibrary [Dev]\CompiledMex" -I "D:\Users\ddevries\Code Repos\CentralLibrary [Dev]\FeatureExtraction\Mex\MatrixSubselection" -I "D:\Users\ddevries\Code Repos\CentralLibrary [Dev]\CompiledMex\interface" -I "C:\Program Files\MATLAB\R2019b\extern\include" -I "C:\Program Files\MATLAB\R2019b\simulink\include" -I "C:\Program Files\MATLAB\R2019b\rtw\c\src" -I "C:\Program Files\MATLAB\R2019b\rtw\c\src\ext_mode\common" -I "C:\Program Files\MATLAB\R2019b\rtw\c\ert" -I "." -DMODEL=MatrixSubselection_logical_mex -DHAVESTDIO -DUSE_RTMODEL -D__USE_MINGW_ANSI_STDIO=1 -DMW_NEEDS_VERSION_H  
+
+ldflags =  -m64 -Wl,--no-undefined -shared -static -L"C:\Program Files\MATLAB\R2019b\extern\lib\win64\mingw64" -llibmx -llibmex -llibmat -lm -llibmwlapack -llibmwblas -llibMatlabDataArray -llibMatlabEngine  -o "MatrixSubselection_logical_mex.mexw64" -llibemlrt -llibcovrt -llibut -llibmwmathutil 
+
+# Build Rules
+rule cc
+    command = $cc $cflags $in -o $out
+
+rule cxx
+    command = $cxx $cxxflags $in -o $out
+
+rule link
+    command = $linker @$out.rsp $ldflags
+    rspfile = $out.rsp
+    rspfile_content = $in
+
+rule linkxx
+    command = $linkerxx $in $ldflags
+
+# Build
+build $builddir/rt_nonfinite.o : cxx D$:/Users/ddevries/Code$ Repos/CentralLibrary$ [Dev]/CompiledMex/rt_nonfinite.cpp
+build $builddir/MatrixSubselection_logical_data.o : cxx D$:/Users/ddevries/Code$ Repos/CentralLibrary$ [Dev]/CompiledMex/MatrixSubselection_logical_data.cpp
+build $builddir/MatrixSubselection_logical_initialize.o : cxx D$:/Users/ddevries/Code$ Repos/CentralLibrary$ [Dev]/CompiledMex/MatrixSubselection_logical_initialize.cpp
+build $builddir/MatrixSubselection_logical_terminate.o : cxx D$:/Users/ddevries/Code$ Repos/CentralLibrary$ [Dev]/CompiledMex/MatrixSubselection_logical_terminate.cpp
+build $builddir/MatrixSubselection_logical.o : cxx D$:/Users/ddevries/Code$ Repos/CentralLibrary$ [Dev]/CompiledMex/MatrixSubselection_logical.cpp
+build $builddir/_coder_MatrixSubselection_logical_api.o : cxx D$:/Users/ddevries/Code$ Repos/CentralLibrary$ [Dev]/CompiledMex/interface/_coder_MatrixSubselection_logical_api.cpp
+build $builddir/_coder_MatrixSubselection_logical_mex.o : cxx D$:/Users/ddevries/Code$ Repos/CentralLibrary$ [Dev]/CompiledMex/interface/_coder_MatrixSubselection_logical_mex.cpp
+build $builddir/MatrixSubselection_logical_emxutil.o : cxx D$:/Users/ddevries/Code$ Repos/CentralLibrary$ [Dev]/CompiledMex/MatrixSubselection_logical_emxutil.cpp
+build $builddir/_coder_MatrixSubselection_logical_info.o : cxx D$:/Users/ddevries/Code$ Repos/CentralLibrary$ [Dev]/CompiledMex/interface/_coder_MatrixSubselection_logical_info.cpp
+build $builddir/cpp_mexapi_version.o : cxx C$:/Program$ Files/MATLAB/R2019b/extern/version/cpp_mexapi_version.cpp
+
+# Link
+build $root\MatrixSubselection_logical_mex.mexw64 : linkxx $builddir\rt_nonfinite.o $builddir\MatrixSubselection_logical_data.o $builddir\MatrixSubselection_logical_initialize.o $builddir\MatrixSubselection_logical_terminate.o $builddir\MatrixSubselection_logical.o $builddir\_coder_MatrixSubselection_logical_api.o $builddir\_coder_MatrixSubselection_logical_mex.o $builddir\MatrixSubselection_logical_emxutil.o $builddir\_coder_MatrixSubselection_logical_info.o $builddir\cpp_mexapi_version.o 
