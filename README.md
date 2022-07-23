@@ -7,22 +7,22 @@ The experiments and analysis described in the manuscript were performed in a num
 ## Experiment Manifest
 Below is a brief description of each experiment/analysis step in the code repository:
 
-###Sample Selection###
+###Sample Selection
 **SS-001:** Applies the exclusion criteria to remove punctate brain metastases
 
-###Image Pre-Processing###
+###Image Pre-Processing
 **IMGPP-102:** Takes the original MRI image and produces a cropped image volume around the centre of each brain metastasis
 **IMGPP-103:** Builds on IMGPP-102 by interpolating to 0.5x0.5x0.5 mm^3 resolution
 **IMGPP-124:** Builds on IMGPP-103 by applying the Z-score intensity normalization
 
-###Region-of-interest Pre-Processing###
+###Region-of-interest Pre-Processing
 **ROIPP-102:** Takes the original regions-of-interest on the MRI and produces a cropped image volume around the centre of each brain metastasis 
 **ROIPP-105:** Builds on ROIPP-102 by interpolating to 0.5x0.5x0.5 mm^3 resolution
 
-###Image Volume Handler###
+###Image Volume Handler
 **IVH-307:** Links imaging and region-of-interest data from IMGPP-124 and ROIPP-105 together for each brain metastasis, along with giving each a sample ID
 
-###Feature Values###
+###Feature Values
 **FV-500-000:** MRI acquisition parameters for each sample
 **FV-500-100:** Clinical features for each sample
 **FV-500-400:** Brain metastasis volume for each sample
@@ -36,22 +36,22 @@ Below is a brief description of each experiment/analysis step in the code reposi
 **FV-705-008:** Creation of Matlab feature values object from FV-705-000 for GLSZM features
 **FV-705-009:** Creation of Matlab feature values object from FV-705-000 for NGTDM features
 
-###Labels###
+###Labels
 **LBL-201:** Ground-truth post-SRS progression labels for each brain metastasis
 
-###Model###
+###Model
 **MDL-100:** Random forest model as described in the manuscript
 
-###Feature Selector###
+###Feature Selector
 **FS-100:** Inter-feature correlation feature filter as described in the manuscript
 
-###Hyper-Parameter Optimizer###
+###Hyper-Parameter Optimizer
 **HPO-100:** Bayesian hyper-parameter optimizer as described in the manuscript
 
-###Objective Function###
+###Objective Function
 **OFN-100:** Out-of-bag AUC hyper-parameter optimizer objective function as described in the manuscript
 
-###Machine Experiments###
+###Machine Experiments
 **EXP-100-400-100:** Bootstrapped machine learning experiment using only clinical features
 **EXP-100-400-101:** Bootstrapped machine learning experiment using only radiomic features
 **EXP-100-400-102:** Bootstrapped machine learning experiment using clinical and radiomic features
@@ -70,7 +70,7 @@ Below is a brief description of each experiment/analysis step in the code reposi
 **EXP-100-601-004:** Bootstrapped machine learning experiment using only data from the Vision & Avanto MR scanners (axial and sagittal acquisitions)
 **EXP-100-601-005:** Bootstrapped machine learning experiment using only data from the Expert & Avanto MR scanners (axial and sagittal acquisitions)
 
-##Analysis & Figure Creation##
+###Analysis & Figure Creation
 **AYS-001-006-004:** Computation of volume correlation coefficient values for each radiomic feature
 **AYS-001-007-022:** Calculation of error metrics across primary cancer site groups
 **AYS-001-007-023:** Calculation of error metrics across brain metastasis volume groups
