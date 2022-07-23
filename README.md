@@ -18,7 +18,7 @@ Below is a brief description of each experiment/analysis step in the code reposi
 **IMGPP-124:** Builds on IMGPP-103 by applying the Z-score intensity normalization
 
 ### Region-of-interest Pre-Processing
-**ROIPP-102:** Takes the original regions-of-interest on the MRI and produces a cropped image volume around the centre of each brain metastasis 
+**ROIPP-102:** Takes the original regions-of-interest on the MRI and produces a cropped region-of-interest volume around the centre of each brain metastasis 
 
 **ROIPP-105:** Builds on ROIPP-102 by interpolating to 0.5x0.5x0.5 mm^3 resolution
 
@@ -106,7 +106,7 @@ Below is a brief description of each experiment/analysis step in the code reposi
 **AYS-001-007-023:** Calculation of error metrics across brain metastasis volume groups
 
 
-**AYS-002-001-005-BW:** Creation of Figure 1 to compare of ROCs for using different feature types)
+**AYS-002-001-005-BW:** Creation of Figure 1 to compare of ROCs for using different feature types
 
 **AYS-002-001-006:** Creation of figure to compare ROCs for different MR scanner pairs (only sagittal acquisitions)
 
@@ -116,4 +116,4 @@ Below is a brief description of each experiment/analysis step in the code reposi
 
 **AYS-002-001-009:** Creation of figure and data for supplementary material on feature importance
 
-**AYS-002-001-010:** Creation of figure 3 to compare ROCs for different MR scanner pairs (axial and sagittal acquisitions)
+**AYS-002-001-010:** Creation of Figure 3 to compare ROCs for different MR scanner pairs (axial and sagittal acquisitions)
