@@ -64,7 +64,7 @@ Below is a brief description of each experiment/analysis step in the code reposi
 ### Objective Function
 **OFN-100:** Out-of-bag AUC hyper-parameter optimizer objective function as described in the manuscript
 
-### Machine Experiments
+### Machine Learning Experiments
 **EXP-100-400-100:** Bootstrapped machine learning experiment using only clinical features
 
 **EXP-100-400-101:** Bootstrapped machine learning experiment using only radiomic features
