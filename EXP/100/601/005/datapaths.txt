@@ -1,4 +1,0 @@
-ExperimentRoot :          E:\Users\ddevries\VUMC BM\Experiments
-ImageVolumeHandlersRoot : E:\Users\ddevries\VUMC BM\Data\Image Volume Handlers
-ImagingDatabaseRoot :     D:\Users\ddevries\Data\SRS RECIST Study\Imaging Database
-ImagingDatabaseRoot_v2 :  E:\Users\ddevries\VUMC BM\Data\Imaging Database

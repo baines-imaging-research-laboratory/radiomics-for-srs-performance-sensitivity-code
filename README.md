@@ -28,7 +28,7 @@ Below is a brief description of each experiment/analysis step in the code reposi
 ### Feature Values
 **FV-500-000:** MRI acquisition parameters for each sample
 
-**FV-500-100:** Clinical features for each sample
+**FV-500-104:** Clinical features for each sample
 
 **FV-500-400:** Brain metastasis volume for each sample
 
@@ -65,55 +65,49 @@ Below is a brief description of each experiment/analysis step in the code reposi
 **OFN-100:** Out-of-bag AUC hyper-parameter optimizer objective function as described in the manuscript
 
 ### Machine Learning Experiments
-**EXP-100-400-100:** Bootstrapped machine learning experiment using only clinical features
+**EXP-100-400-200:** Bootstrapped machine learning experiment using only clinical features
 
 **EXP-100-400-101:** Bootstrapped machine learning experiment using only radiomic features
 
-**EXP-100-400-102:** Bootstrapped machine learning experiment using clinical and radiomic features
+**EXP-100-400-202:** Bootstrapped machine learning experiment using clinical and radiomic features
 
 
-**EXP-100-500-010:** Bootstrapped machine learning experiment removing all volume correlated features at a cut-off of 0
+**EXP-100-501-101:** Bootstrapped machine learning experiment removing all volume correlated features at a cut-off of 0.85
 
-**EXP-100-501-001:** Bootstrapped machine learning experiment removing all volume correlated features at a cut-off of 0.85
+**EXP-100-501-102:** Bootstrapped machine learning experiment removing all volume correlated features at a cut-off of 0.70
 
-**EXP-100-501-002:** Bootstrapped machine learning experiment removing all volume correlated features at a cut-off of 0.70
+**EXP-100-501-103:** Bootstrapped machine learning experiment removing all volume correlated features at a cut-off of 0.55
 
-**EXP-100-501-003:** Bootstrapped machine learning experiment removing all volume correlated features at a cut-off of 0.55
+**EXP-100-501-104:** Bootstrapped machine learning experiment removing all volume correlated features at a cut-off of 0.40
 
-**EXP-100-501-004:** Bootstrapped machine learning experiment removing all volume correlated features at a cut-off of 0.40
-
-**EXP-100-501-005:** Bootstrapped machine learning experiment removing all volume correlated features at a cut-off of 0.25
-
-**EXP-100-501-006:** Bootstrapped machine learning experiment removing all volume correlated features at a cut-off of 0.10
+**EXP-100-501-105:** Bootstrapped machine learning experiment removing all volume correlated features at a cut-off of 0.25
 
 
-**EXP-100-601-001:** Bootstrapped machine learning experiment using only data from the Vision & Expert MR scanners
+**EXP-100-601-101:** Bootstrapped machine learning experiment using only data from the Vision & Expert MR scanners
 
-**EXP-100-601-002:** Bootstrapped machine learning experiment using only data from the Vision & Avanto MR scanners (only sagittal acquisitions)
+**EXP-100-601-102:** Bootstrapped machine learning experiment using only data from the Vision & Avanto MR scanners (only sagittal acquisitions)
 
-**EXP-100-601-003:** Bootstrapped machine learning experiment using only data from the Expert & Avanto MR scanners (only sagittal acquisitions)
+**EXP-100-601-103:** Bootstrapped machine learning experiment using only data from the Expert & Avanto MR scanners (only sagittal acquisitions)
 
-**EXP-100-601-004:** Bootstrapped machine learning experiment using only data from the Vision & Avanto MR scanners (axial and sagittal acquisitions)
+**EXP-100-601-104:** Bootstrapped machine learning experiment using only data from the Vision & Avanto MR scanners (axial and sagittal acquisitions)
 
-**EXP-100-601-005:** Bootstrapped machine learning experiment using only data from the Expert & Avanto MR scanners (axial and sagittal acquisitions)
+**EXP-100-601-105:** Bootstrapped machine learning experiment using only data from the Expert & Avanto MR scanners (axial and sagittal acquisitions)
 
 
 ### Analysis & Figure Creation
 **AYS-001-006-004:** Computation of volume correlation coefficient values for each radiomic feature
 
-**AYS-001-007-022:** Calculation of error metrics across primary cancer site groups
+**AYS-001-007-122:** Calculation of error metrics across primary cancer site groups
 
-**AYS-001-007-023:** Calculation of error metrics across brain metastasis volume groups
+**AYS-001-007-123:** Calculation of error metrics across brain metastasis volume groups
 
 
-**AYS-002-001-005-BW:** Creation of Figure 1 to compare of ROCs for using different feature types
+**AYS-002-001-105-BW:** Creation of Figure 1 to compare of ROCs for using different feature types
 
-**AYS-002-001-006:** Creation of figure to compare ROCs for different MR scanner pairs (only sagittal acquisitions)
+**AYS-002-001-107:** Creation of Table 3 to compare error metrics across primary cancer site groups
 
-**AYS-002-001-007:** Creation of Table 3 to compare error metrics across primary cancer site groups
+**AYS-002-001-108:** Creation of Figure 2 to compare error metrics across brain metastasis volume groups and correlation cut-off values
 
-**AYS-002-001-008:** Creation of Figure 2 to compare error metrics across brain metastasis volume groups and correlation cut-off values
+**AYS-002-001-109:** Creation of figure and data for supplementary material on feature importance
 
-**AYS-002-001-009:** Creation of figure and data for supplementary material on feature importance
-
-**AYS-002-001-010:** Creation of Figure 3 to compare ROCs for different MR scanner pairs (axial and sagittal acquisitions)
+**AYS-002-001-110-BW:** Creation of Figure 3 to compare ROCs for different MR scanner pairs (axial and sagittal acquisitions)
