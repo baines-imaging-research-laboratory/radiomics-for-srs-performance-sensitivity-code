@@ -5,7 +5,7 @@ Experiment.StartNewSection('Analysis');
     m2dAUCFromMeanROCPerGroupPerCutoff, m3dAUC95ConfidenceIntervalFromMeanROCPerGroupPerCutoff,...
     m2dFPRFromMeanROCPerGroupPerCutoff, m3dFPR95ConfidenceIntervalFromMeanROCPerGroupPerCutoff,...
     m2dFNRFromMeanROCPerGroupPerCutoff, m3dFNR95ConfidenceIntervalFromMeanROCPerGroupPerCutoff] = ...
-    FileIOUtils.LoadMatFile(fullfile(ExperimentManager.GetPathToExperimentAssetResultsDirectory('AYS-001-007-123'), '01 Analysis', 'Error Metrics Per Volume Split, Bootstrap and Cutoff.mat'),...
+    FileIOUtils.LoadMatFile(fullfile(ExperimentManager.GetPathToExperimentAssetResultsDirectory('AYS-001-007-126'), '01 Analysis', 'Error Metrics Per Volume Split, Bootstrap and Cutoff.mat'),...
     'vdCutoffValues',...
     'vsVolumeGroups',...
     'm2dAUCFromMeanROCPerGroupPerCutoff', 'm3dAUC95ConfidenceIntervalFromMeanROCPerGroupPerCutoff',...
@@ -58,7 +58,7 @@ m2dErrorBarSizePerGroupPerVariable = [m2dAUCErrorBarSizePerGroupPerCutoff(:,1)';
     'TextureColourPerVariable', {[0.65 0.65 0.65], [0.40 0.40 0.40], [0.85 0.85 0.85]},...
     'TextureLineWidth', 1, 'TextureLineSpacing' , 4,...
     'BarColourPerVariable', {[1 1 1], [0.75 0.75 0.75], [0.5 0.5 0.5]},...
-    'XLabel', "Error Metrics for Correlation Cut-off = 1",...
+    'XLabel', "Error Metrics for Correlation Threshold = 1",...
     'YLabel', "Error Metric Value",...
     'YTicks', 0:0.1:0.7, 'YLim', [0 0.75],...
     'FigureSize', vdFigDims_cm, 'FigureSizeUnits', 'centimeters',...
@@ -119,7 +119,7 @@ plot(-vdCorrelationCoefficientCutoffs, m2dAUCFromMeanROCPerGroupPerCutoff(3,:), 
 
 
 ylabel("AUC");
-xlabel("Correlation Cut-off");
+xlabel("Correlation Threshold");
 
 xticks(-vdCorrelationCoefficientCutoffs);
 xticklabels(string(vdCorrelationCoefficientCutoffs));
@@ -174,15 +174,15 @@ plot(-vdCorrelationCoefficientCutoffs, m2dFPRFromMeanROCPerGroupPerCutoff(3,:), 
 
 
 ylabel("FPR");
-xlabel("Correlation Cut-off");
+xlabel("Correlation Threshold");
 
 xticks(-vdCorrelationCoefficientCutoffs);
 xticklabels(string(vdCorrelationCoefficientCutoffs));
 
 xlim(-vdCorrelationCoefficientCutoffs([1,end]));
-ylim([0.25 0.6]);
+ylim([0.25 0.55]);
 
-yticks(0.25:0.05:0.6);
+yticks(0.25:0.05:0.55);
 
 
 grid('on');
@@ -232,15 +232,15 @@ plot(-vdCorrelationCoefficientCutoffs, m2dFNRFromMeanROCPerGroupPerCutoff(3,:), 
 
 
 ylabel("FNR");
-xlabel("Correlation Cut-off");
+xlabel("Correlation Threshold");
 
 xticks(-vdCorrelationCoefficientCutoffs);
 xticklabels(string(vdCorrelationCoefficientCutoffs));
 
 xlim(-vdCorrelationCoefficientCutoffs([1,end]));
-ylim([0.25 0.6]);
+ylim([0.25 0.55]);
 
-yticks(0.25:0.05:0.6);
+yticks(0.25:0.05:0.55);
 
 grid('on');
 

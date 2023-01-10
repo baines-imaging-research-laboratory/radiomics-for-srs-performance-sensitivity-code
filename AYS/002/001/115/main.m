@@ -1,18 +1,18 @@
 % Feature importance rankings
 Experiment.StartNewSection('Analysis');
 
-vdCorrelationCoefficientCutoffs = [1 0.85 0.70 0.55 0.40 0.25 0.1 0]';
+vdCorrelationCoefficientCutoffs = [1 0.85 0.7 0.55 0.4 0.25 0.1 0]';
 dNumCorrelationCoefficientCutoffs = length(vdCorrelationCoefficientCutoffs);
 
 vsBaseExperimentExpCodesPerCutoff = [...
     "EXP-100-400-202"
-    "EXP-100-501-101"
-    "EXP-100-501-102"
-    "EXP-100-501-103"
-    "EXP-100-501-104"
-    "EXP-100-501-105"
-    "EXP-100-501-106"
-    "EXP-100-500-110"];
+    "EXP-100-701-001"
+    "EXP-100-701-002"
+    "EXP-100-701-003"
+    "EXP-100-701-004"
+    "EXP-100-701-005"
+    "EXP-100-701-005" % number of features did not changes
+    "EXP-100-701-005"]; % number of features did not changes
 
 vsClinicalFeatureValueCodes = ["FV-500-104"];
 vsRadiomicFeatureValueCodes = ["FV-705-001","FV-705-002","FV-705-005","FV-705-006","FV-705-007","FV-705-008","FV-705-009"];
@@ -51,14 +51,10 @@ for dCutoffIndex=1:dNumCorrelationCoefficientCutoffs
     if dCutoffIndex == 1
         vbKeepRadiomicFeature = true(1,oRadiomicDataSet.GetNumberOfFeatures());
         vbKeepClinicalFeature = true(1,oClinicalDataSet.GetNumberOfFeatures());
-    elseif dCutoffIndex == dNumCorrelationCoefficientCutoffs
-        vbKeepRadiomicFeature = false(1,oRadiomicDataSet.GetNumberOfFeatures());
-        vbKeepClinicalFeature = (oClinicalDataSet.GetFeatureNames() ~= "GTV Volume");
     else
-        dCorrelationCoefficientCutoff = vdCorrelationCoefficientCutoffs(dCutoffIndex);
-        
-        vbKeepRadiomicFeature = ~((abs(vdCorrelationCoefficientToVolume) >= dCorrelationCoefficientCutoff) | (abs(vdCorrelationCoefficientToVolumeCubeRoot) >= dCorrelationCoefficientCutoff));
-        vbKeepClinicalFeature = (oClinicalDataSet.GetFeatureNames() ~= "GTV Volume");
+        [vbKeepRadiomicFeature,vbKeepClinicalFeature] = FileIOUtils.LoadMatFile(...
+            fullfile(ExperimentManager.GetPathToExperimentAssetResultsDirectory(sExp), '01 Loading Experiment Assets\Clinical and Radiomic Feature Filters.mat'),...
+            'vbRadiomicFeatureSelection', 'vbClinicalFeatureSelection');
     end
     
     m2bRemovedByVolumeCorrelationFilterPerCutoffPerFeaures(dCutoffIndex, 1:dNumRadiomicFeatures) = ~vbKeepRadiomicFeature;
@@ -95,28 +91,28 @@ for dCutoffIndex=1:dNumCorrelationCoefficientCutoffs
         m2dFeatureRankingScorePerBootstrapPerFeature(dBootstrapIndex, end-dNumClinicalFeatures+1:end) = vdClinicalFeatureImportanceScores;
         m2dFeatureRankPerBootstrapPerFeature(dBootstrapIndex, end-dNumClinicalFeatures+1:end) = vdClinicalFeatureRankings;
         
-        if dCutoffIndex <= 7
-            vdInsertIndices = 1:dNumRadiomicFeatures;
-            
-            vdInsertIndices = vdInsertIndices(vbKeepRadiomicFeature); % account for feature loss due to volume correlation
-            vdInsertIndices = vdInsertIndices(vbRadiomicMask); % account for feature loss due to inter-feature correlation
-            
-            m2dFeatureRankingScorePerBootstrapPerFeature(dBootstrapIndex, vdInsertIndices) = vdNormalizedFeatureImportance(1:end-sum(vbKeepClinicalFeature));
-            m2dFeatureRankPerBootstrapPerFeature(dBootstrapIndex, vdInsertIndices) = vdFeatureRankings(1:end-sum(vbKeepClinicalFeature));
-            
-            % nan correction:
-            % want to set all nans due to inter-feature correlation to be
-            % set to the min feature score or max feature rank to indicate
-            % "these features were excluded by the correlation filter,
-            % therefore they were the least important".
-            
-            vdNanIndices = 1:dNumRadiomicFeatures;
-            vdNanIndices = vdNanIndices(vbKeepRadiomicFeature); 
-            vdNanIndices = vdNanIndices(~vbRadiomicMask);
-            
-            m2dFeatureRankingScorePerBootstrapPerFeature(dBootstrapIndex, vdNanIndices) = min(vdNormalizedFeatureImportance);
-            m2dFeatureRankPerBootstrapPerFeature(dBootstrapIndex, vdNanIndices) = max(vdFeatureRankings);
-        end
+        
+        
+        vdInsertIndices = 1:dNumRadiomicFeatures;
+        
+        vdInsertIndices = vdInsertIndices(vbKeepRadiomicFeature); % account for feature loss due to volume correlation
+        vdInsertIndices = vdInsertIndices(vbRadiomicMask); % account for feature loss due to inter-feature correlation
+        
+        m2dFeatureRankingScorePerBootstrapPerFeature(dBootstrapIndex, vdInsertIndices) = vdNormalizedFeatureImportance(1:end-sum(vbKeepClinicalFeature));
+        m2dFeatureRankPerBootstrapPerFeature(dBootstrapIndex, vdInsertIndices) = vdFeatureRankings(1:end-sum(vbKeepClinicalFeature));
+        
+        % nan correction:
+        % want to set all nans due to inter-feature correlation to be
+        % set to the min feature score or max feature rank to indicate
+        % "these features were excluded by the correlation filter,
+        % therefore they were the least important".
+        
+        vdNanIndices = 1:dNumRadiomicFeatures;
+        vdNanIndices = vdNanIndices(vbKeepRadiomicFeature);
+        vdNanIndices = vdNanIndices(~vbRadiomicMask);
+        
+        m2dFeatureRankingScorePerBootstrapPerFeature(dBootstrapIndex, vdNanIndices) = min(vdNormalizedFeatureImportance);
+        m2dFeatureRankPerBootstrapPerFeature(dBootstrapIndex, vdNanIndices) = max(vdFeatureRankings);
     end
     
     vdAverageFeatureScore = zeros(1,dTotalNumFeatures);
@@ -246,7 +242,7 @@ xticks(1:8)
 xticklabels(string(vdCorrelationCoefficientCutoffs))
 hAxes.XAxis.TickLength = [0 0];
 
-xlabel('Correlation Cut-off')
+xlabel('Correlation Threshold')
 
 hAxes.XAxis.FontSize = 8;
 hAxes.XAxis.Label.FontSize = 9;
@@ -306,7 +302,10 @@ vsOriginalTopFeaturesThatBecameNonTopFeaturesAtLaterCutoff = string.empty();
 vsOriginalTopFeaturesThatStayedTopFeaturesAtLaterCutoff = string.empty();
 
 dOriginalCutoff = 1;
-dLaterCutoffIndex = 6;
+
+dCutoff0_25Index = find(vdCorrelationCoefficientCutoffs == 0.25);
+dLaterCutoffIndex = dCutoff0_25Index;
+
 dTopDefinition = 0.75; % feature importance >= than this number
 
 vsFeatureNames = [oRadiomicDataSet.GetFeatureNames() oClinicalDataSet.GetFeatureNames()]';
@@ -411,8 +410,9 @@ writecell([c1xHeader; c2xData], fullfile(Experiment.GetResultsDirectory(), 'Feat
 
 % summary table
 
+
 vbHighlyImportantAtCutoff1PerFeature = m2dNormalizedFeatureImportancePerCutoffPerFeature(1,:) >= dTopDefinition;
-vbHighlyImportantAtCutoff0_25PerFeature = m2dNormalizedFeatureImportancePerCutoffPerFeature(6,:) >= dTopDefinition;
+vbHighlyImportantAtCutoff0_25PerFeature = m2dNormalizedFeatureImportancePerCutoffPerFeature(dCutoff0_25Index,:) >= dTopDefinition;
 
 vbFeatureInAnalysis = vbHighlyImportantAtCutoff0_25PerFeature | vbHighlyImportantAtCutoff1PerFeature;
 
@@ -429,15 +429,15 @@ end
 vdFeatureRankAtCutoff1PerFeature = vdFeatureRankAtCutoff1PerFeature(vbFeatureInAnalysis);
 
 vdFeatureRankAtCutoff0_25PerFeature = zeros(dTotalNumFeatures,1);
-[~,vdSortIndices] = sort(m2dNormalizedFeatureImportancePerCutoffPerFeature(6,:), 'descend');
+[~,vdSortIndices] = sort(m2dNormalizedFeatureImportancePerCutoffPerFeature(dCutoff0_25Index,:), 'descend');
 
 for dFeatureIndex=1:dTotalNumFeatures
     vdFeatureRankAtCutoff0_25PerFeature(dFeatureIndex) = find(vdSortIndices == dFeatureIndex);
 end
 
-vdFeatureRankAtCutoff0_25PerFeature(isnan(m2dNormalizedFeatureImportancePerCutoffPerFeature(6,:))) = nan;
+vdFeatureRankAtCutoff0_25PerFeature(isnan(m2dNormalizedFeatureImportancePerCutoffPerFeature(dCutoff0_25Index,:))) = nan;
 vdFeatureRankAtCutoff0_25PerFeature = vdFeatureRankAtCutoff0_25PerFeature(vbFeatureInAnalysis);
-vdFeatureRankAtCutoff0_25PerFeature = vdFeatureRankAtCutoff0_25PerFeature - sum(isnan(m2dNormalizedFeatureImportancePerCutoffPerFeature(6,:)));
+vdFeatureRankAtCutoff0_25PerFeature = vdFeatureRankAtCutoff0_25PerFeature - sum(isnan(m2dNormalizedFeatureImportancePerCutoffPerFeature(dCutoff0_25Index,:)));
 
 [~,vdCutoff1RankingSort] = sort(vdFeatureRankAtCutoff1PerFeature, 'ascend');
 
@@ -445,7 +445,7 @@ vdFeatureImportanceScoreAtCutoff1_sorted = m2dNormalizedFeatureImportancePerCuto
 vdFeatureImportanceScoreAtCutoff1_sorted = vdFeatureImportanceScoreAtCutoff1_sorted(vbFeatureInAnalysis);
 vdFeatureImportanceScoreAtCutoff1_sorted = vdFeatureImportanceScoreAtCutoff1_sorted(vdCutoff1RankingSort);
 
-vdFeatureImportanceScoreAtCutoff0_25_sorted = m2dNormalizedFeatureImportancePerCutoffPerFeature(6,:);
+vdFeatureImportanceScoreAtCutoff0_25_sorted = m2dNormalizedFeatureImportancePerCutoffPerFeature(dCutoff0_25Index,:);
 vdFeatureImportanceScoreAtCutoff0_25_sorted = vdFeatureImportanceScoreAtCutoff0_25_sorted(vbFeatureInAnalysis);
 vdFeatureImportanceScoreAtCutoff0_25_sorted = vdFeatureImportanceScoreAtCutoff0_25_sorted(vdCutoff1RankingSort);
 

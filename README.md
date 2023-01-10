@@ -72,15 +72,15 @@ Below is a brief description of each experiment/analysis step in the code reposi
 **EXP-100-400-202:** Bootstrapped machine learning experiment using clinical and radiomic features
 
 
-**EXP-100-501-101:** Bootstrapped machine learning experiment removing all volume correlated features at a cut-off of 0.85
+**EXP-100-701-101:** Bootstrapped machine learning experiment removing all volume correlated features at a cut-off of 0.85
 
-**EXP-100-501-102:** Bootstrapped machine learning experiment removing all volume correlated features at a cut-off of 0.70
+**EXP-100-701-102:** Bootstrapped machine learning experiment removing all volume correlated features at a cut-off of 0.70
 
-**EXP-100-501-103:** Bootstrapped machine learning experiment removing all volume correlated features at a cut-off of 0.55
+**EXP-100-701-103:** Bootstrapped machine learning experiment removing all volume correlated features at a cut-off of 0.55
 
-**EXP-100-501-104:** Bootstrapped machine learning experiment removing all volume correlated features at a cut-off of 0.40
+**EXP-100-701-104:** Bootstrapped machine learning experiment removing all volume correlated features at a cut-off of 0.40
 
-**EXP-100-501-105:** Bootstrapped machine learning experiment removing all volume correlated features at a cut-off of 0.25
+**EXP-100-701-105:** Bootstrapped machine learning experiment removing all volume correlated features at a cut-off of 0.25
 
 
 **EXP-100-601-101:** Bootstrapped machine learning experiment using only data from the Vision & Expert MR scanners
@@ -95,19 +95,19 @@ Below is a brief description of each experiment/analysis step in the code reposi
 
 
 ### Analysis & Figure Creation
-**AYS-001-006-004:** Computation of volume correlation coefficient values for each radiomic feature
+**AYS-001-006-005:** Computation of volume correlation coefficient and p-values for each radiomic feature
 
 **AYS-001-007-122:** Calculation of error metrics across primary cancer site groups
 
-**AYS-001-007-123:** Calculation of error metrics across brain metastasis volume groups
+**AYS-001-007-126:** Calculation of error metrics across brain metastasis volume groups
 
 
 **AYS-002-001-105-BW:** Creation of Figure 1 to compare of ROCs for using different feature types
 
 **AYS-002-001-107:** Creation of Table 3 to compare error metrics across primary cancer site groups
 
-**AYS-002-001-108:** Creation of Figure 2 to compare error metrics across brain metastasis volume groups and correlation cut-off values
+**AYS-002-001-113:** Creation of Figure 2 to compare error metrics across brain metastasis volume groups and correlation cut-off values
 
-**AYS-002-001-109:** Creation of figure and data for supplementary material on feature importance
+**AYS-002-001-115:** Creation of figure and data for supplementary material on feature importance
 
 **AYS-002-001-110-BW:** Creation of Figure 3 to compare ROCs for different MR scanner pairs (axial and sagittal acquisitions)

@@ -1,16 +1,15 @@
 Experiment.StartNewSection('Analysis');
 
-
 vdCutoffValues = [1 0.85 0.7 0.55 0.4 0.25 0.1 0];
 vsExpCodePerCutoff = [...
     "EXP-100-400-202"
-    "EXP-100-501-101"
-    "EXP-100-501-102"
-    "EXP-100-501-103"
-    "EXP-100-501-104"
-    "EXP-100-501-105"
-    "EXP-100-501-106"
-    "EXP-100-500-110"];
+    "EXP-100-701-001"
+    "EXP-100-701-002"
+    "EXP-100-701-003"
+    "EXP-100-701-004"
+    "EXP-100-701-005"
+    "EXP-100-701-005" % features unchanged
+    "EXP-100-701-005"]; % features unchanged
 
 dNumCutoffs = length(vsExpCodePerCutoff);
 

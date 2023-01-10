@@ -10,7 +10,6 @@ ExperimentManager.LoadExperimentManifestCodesMatFile();
 oClinicalDataSet = ExperimentManager.GetLabelledFeatureValues(...
     vsClinicalFeatureValueCodes,...
     sLabelsCode);
-oClinicalDataSet = oClinicalDataSet(:, oClinicalDataSet.GetFeatureNames() ~= "GTV Volume"); % remove GTV volume
 
 oRadiomicDataSet = ExperimentManager.GetLabelledFeatureValues(...
     vsRadiomicFeatureValueCodes,...
@@ -49,15 +48,30 @@ vstBootstrappedPartitions = [vstBootstrappedPartitions; stTrainAndTestOnAllDataP
 
 
 % volume feature blacklist
-dCorrelationCoefficientCutoff = 0.70;
+dCorrelationCoefficientCutoff = 0.55;
+dPValueCutoff = 0.05; % Bonferroni correction applied to p-values, so 0.05 cutoff can be used
 
-[vdCorrelationCoefficientToVolume, vdCorrelationCoefficientToVolumeCubeRoot] = FileIOUtils.LoadMatFile(fullfile(ExperimentManager.GetPathToExperimentAssetResultsDirectory('AYS-001-006-004'), '01 Analysis', 'FV-705-XXX Volume Correlation Coefficients.mat'),...
-    'vdCorrelationCoefficientToVolume', 'vdCorrelationCoefficientToVolumeCubeRoot');
+[vdCorrelationCoefficientToVolume, vdCorrelationCoefficientToVolumeCubeRoot, vdCorrectedPValuePerRadiomicFeatureForVolume, vdCorrectedPValuePerRadiomicFeatureForVolumeCubeRoot, vdCorrectedPValuePerClinicalFeature] =...
+    FileIOUtils.LoadMatFile(fullfile(ExperimentManager.GetPathToExperimentAssetResultsDirectory('AYS-001-006-005'), '01 Analysis', 'P-Values And Correlation Coefficients Per Feature.mat'),...
+    'vdCorrelationCoefficientToVolume', 'vdCorrelationCoefficientToVolumeCubeRoot', 'vdCorrectedPValuePerRadiomicFeatureForVolume', 'vdCorrectedPValuePerRadiomicFeatureForVolumeCubeRoot', 'vdCorrectedPValuePerClinicalFeature');
 
-vbRemoveFeatureSinceCorrelatedToVolume = (abs(vdCorrelationCoefficientToVolume) >= dCorrelationCoefficientCutoff) | (abs(vdCorrelationCoefficientToVolumeCubeRoot) >= dCorrelationCoefficientCutoff);
+vdCorrectedPValuePerRadiomicFeatureForVolume(oRadiomicDataSet.GetFeatureNames() == "original_shape_VoxelVolume") = 0; % need to override since this feature was what compared against
+vdCorrectedPValuePerRadiomicFeatureForVolumeCubeRoot(oRadiomicDataSet.GetFeatureNames() == "original_shape_VoxelVolume") = 0; % need to override since this feature was what compared against
 
-oRadiomicDataSet = oRadiomicDataSet(:, ~vbRemoveFeatureSinceCorrelatedToVolume);
+% - radiomic features
+vbRemoveFeatureSinceSignificantAndCorrelatedToVolume = (abs(vdCorrelationCoefficientToVolume) >= dCorrelationCoefficientCutoff) & (vdCorrectedPValuePerRadiomicFeatureForVolume <= dPValueCutoff);
+vbRemoveFeatureSinceSignificantAndCorrelatedToVolumeCubeRoot = (abs(vdCorrelationCoefficientToVolumeCubeRoot) >= dCorrelationCoefficientCutoff) & (vdCorrectedPValuePerRadiomicFeatureForVolumeCubeRoot <= dPValueCutoff);
 
+oRadiomicDataSet = oRadiomicDataSet(:, ~(vbRemoveFeatureSinceSignificantAndCorrelatedToVolume | vbRemoveFeatureSinceSignificantAndCorrelatedToVolumeCubeRoot));
+
+% - clinical feature
+vbRemoveFeatureSinceDependentOnVolume = vdCorrectedPValuePerClinicalFeature <= dPValueCutoff; 
+
+oClinicalDataSet = oClinicalDataSet(:, ~vbRemoveFeatureSinceDependentOnVolume);
+
+FileIOUtils.SaveMatFile(fullfile(Experiment.GetResultsDirectory(), 'Clinical and Radiomic Feature Filters.mat'),...
+    'vbRadiomicFeatureSelection', ~(vbRemoveFeatureSinceSignificantAndCorrelatedToVolume | vbRemoveFeatureSinceSignificantAndCorrelatedToVolumeCubeRoot),...
+    'vbClinicalFeatureSelection', ~vbRemoveFeatureSinceDependentOnVolume);
 
 Experiment.EndCurrentSection();
 
